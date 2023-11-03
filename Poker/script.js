@@ -61,8 +61,13 @@ function dealCards() {
     let hand = [];
     let active = false;
     for (let i = 0; i < 5; i++) {
-        let random = Math.floor(Math.random() * 52);
-        hand.push(cartas[random]); 
+        if (cartas.length === 0) {
+            alert("No quedan cartas en el mazo.");
+        }
+        let random = Math.floor(Math.random() * cartas.length);
+        let randomCard = cartas[random];
+        hand.push(randomCard); 
+        cartas.splice(random,1)
     }
     for (let i = 0; i < 5; i++) {
         document.getElementById("card" + (i + 1)).src = hand[i][0];
@@ -73,12 +78,12 @@ function dealCards() {
           if (hand[i][1] === hand[j][1]) {
             document.getElementById("congrats").innerHTML = "Pareja. Has ganado"
             active = true;
+
           }
         }
     }
-
     if (active == false) {
-        document.getElementById("congrats").innerHTML = "Has perdido."   
+        document.getElementById("congrats").innerHTML = "Has perdido."
     }
 }
 
