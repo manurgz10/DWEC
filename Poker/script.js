@@ -62,6 +62,7 @@ function dealCards() {
   for (let i = 0; i < 5; i++) {
     if (cartas.length === 0) {
       alert("No quedan cartas en el mazo.");
+      window.close();
     }
     let random = Math.floor(Math.random() * cartas.length);
     let randomCard = cartas[random];
