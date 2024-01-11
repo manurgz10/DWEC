@@ -21,6 +21,33 @@
     <script>
       var map = L.map("map").setView([0, 0], 2);
 
+      var icon1 = L.icon({
+        iconUrl: "npc.png",
+        iconSize: [48, 48], // size of the icon
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+      });
+
+      var LeafIcon = L.Icon.extend({
+        options: {
+          shadowUrl: "leaf-shadow.png",
+          iconSize: [38, 95],
+          shadowSize: [50, 64],
+          iconAnchor: [22, 94],
+          shadowAnchor: [4, 62],
+          popupAnchor: [-3, -76],
+        },
+      });
+
+      var greenIcon = new LeafIcon({ iconUrl: "leaf-green.png" }),
+        redIcon = new LeafIcon({ iconUrl: "leaf-red.png" }),
+        orangeIcon = new LeafIcon({ iconUrl: "leaf-orange.png" });
+
+        var iconos = [
+          greenIcon,
+          redIcon,
+          orangeIcon
+        ]
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution:
@@ -28,24 +55,28 @@
       }).addTo(map);
 
       function storagePositions(arrayMarcas) {
-        localStorage.setItem('marcas', JSON.stringify(Array.from(arrayMarcas)));
+        localStorage.setItem("marcas", JSON.stringify(Array.from(arrayMarcas)));
       }
 
       function setPositions() {
-        var storedMarcas = localStorage.getItem('marcas');
+        var storedMarcas = localStorage.getItem("marcas");
         if (storedMarcas) {
           var arrayMarcas = JSON.parse(storedMarcas).slice(-4); // Obtener solo las últimas 4 marcas
-          arrayMarcas.forEach((marca) => {
-            L.marker([marca.latitud, marca.longitud]).addTo(map);
+          arrayMarcas.forEach((marca,index) => {
+            index++
+            var icono = iconos[index % iconos.length];
+            L.marker([marca.latitud, marca.longitud], {icon: icono}).addTo(map).bindPopup("Por aquí has clickado...");
           });
         }
       }
 
       navigator.geolocation.getCurrentPosition(function (position) {
-        var marker = L.marker([
-          position.coords.latitude,
-          position.coords.longitude,
-        ]).addTo(map);
+        var marker = L.marker(
+          [position.coords.latitude, position.coords.longitude],
+          { icon: icon1 }
+        )
+          .addTo(map)
+          .bindPopup("¡Aquí estás tú!");
         map.setView([position.coords.latitude, position.coords.longitude], 15);
       });
 
