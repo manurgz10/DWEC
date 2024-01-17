@@ -23,51 +23,23 @@
 
       var icon1 = L.icon({
         iconUrl: "npc.png",
-        iconSize: [48, 48], // size of the icon
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+        iconSize: [48, 48],
+        iconAnchor: [22, 94],
+        popupAnchor: [-3, -76],
       });
 
-      var LeafIcon = L.Icon.extend({
-        options: {
-          shadowUrl: "leaf-shadow.png",
-          iconSize: [38, 95],
-          shadowSize: [50, 64],
-          iconAnchor: [22, 94],
-          shadowAnchor: [4, 62],
-          popupAnchor: [-3, -76],
-        },
-      });
-
-      var greenIcon = new LeafIcon({ iconUrl: "leaf-green.png" }),
-        redIcon = new LeafIcon({ iconUrl: "leaf-red.png" }),
-        orangeIcon = new LeafIcon({ iconUrl: "leaf-orange.png" });
-
-        var iconos = [
-          greenIcon,
-          redIcon,
-          orangeIcon
-        ]
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution:
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map);
 
-      function storagePositions(arrayMarcas) {
-        localStorage.setItem("marcas", JSON.stringify(Array.from(arrayMarcas)));
-      }
+      var savedPositions = JSON.parse(localStorage.getItem("positions"));
 
-      function setPositions() {
-        var storedMarcas = localStorage.getItem("marcas");
-        if (storedMarcas) {
-          var arrayMarcas = JSON.parse(storedMarcas).slice(-4); // Obtener solo las últimas 4 marcas
-          arrayMarcas.forEach((marca,index) => {
-            index++
-            var icono = iconos[index % iconos.length];
-            L.marker([marca.latitud, marca.longitud], {icon: icono}).addTo(map).bindPopup("Por aquí has clickado...");
-          });
-        }
+      function addPosition(latitude, longitude) {
+        savedPositions.push({ lat: latitude, lng: longitude });
+        savedPositions = savedPositions.slice(0, 5);
+        localStorage.setItem("positions", JSON.stringify(savedPositions));
       }
 
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -76,22 +48,45 @@
           { icon: icon1 }
         )
           .addTo(map)
-          .bindPopup("¡Aquí estás tú!");
+          .on("click", function (e) {
+            map.setView([e.latlng.lat, e.latlng.lng], 15);
+            reverseGeocode(e.latlng.lat, e.latlng.lng, function (address) {
+              alert("Dirección: " + address);
+            });
+          });
+
+        addPosition(position.coords.latitude, position.coords.longitude);
+
+        savedPositions.forEach(function (pos) {
+          L.marker([pos.lat, pos.lng], { icon: icon1 })
+            .addTo(map)
+            .on("click", function (e) {
+              map.setView([e.latlng.lat, e.latlng.lng], 15);
+              reverseGeocode(e.latlng.lat, e.latlng.lng, function (address) {
+                alert("Dirección: " + address);
+              });
+            });
+        });
+
         map.setView([position.coords.latitude, position.coords.longitude], 15);
       });
 
-      setPositions(); // Cargar las marcas almacenadas al cargar la página.
-
-      var arrayMarcas = new Set();
-      map.on("click", function (e) {
-        const marca = {
-          latitud: e.latlng.lat,
-          longitud: e.latlng.lng,
-        };
-        arrayMarcas.add(marca);
-        storagePositions(arrayMarcas);
-        setPositions();
-      });
+      function reverseGeocode(latitude, longitude, callback) {
+        var url =
+          "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
+          latitude +
+          "&lon=" +
+          longitude +
+          "&zoom=18&addressdetails=1";
+        fetch(url)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (json) {
+            var address = json.display_name;
+            callback(address);
+          });
+      }
     </script>
   </body>
 </html>
