@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        Objeto Matematicas
+        propiedades pi Math.pi
+        funcion suma que admite n valores
+        function suma(){
+            arguments[0] == 3;
+            arguments[1] == 47;
+            arguments[2] == 6;
+        }
+
+        suma(3,47,6)
+
+        function multip`lciar que tiene que admitir n 
+        valores la funcion multiplicar debe añadirse despues de crear el obejto
+
+        resolver las operaciones 
+        4+5+PI+3*4*7
+        4*PI*8*(12+4+7)
+        */
+
+        const mates = {
+            pi: Math.PI,
+            suma: function() {
+            if (arguments.length > 0) {
+                let resultado = 0;
+
+                for (let i = 0; i < arguments.length; i++) {
+                    resultado += arguments[i];
+                }
+
+                return resultado;
+            } else {
+                return 0; 
+            }
+          }
+        } ;
+
+        
+        
+
+        mates.multiplciar = function(){
+            if (arguments.length > 0) {
+                let resultado = 1;
+
+                for (let i = 0; i < arguments.length; i++) {
+                    resultado *= arguments[i];
+                }
+
+                return resultado;
+            } else {
+                return 0; 
+            }
+        }
+
+        const op = mates.suma(4, 5, mates.pi, mates.multiplciar(3,4,7))
+        console.log(op)
+
+        const ap = mates.multiplciar(3,4,5)
+        console.log(ap)
+
+        // FUNCIONES AVANZADAAS
+
+        function qa(){
+
+        }
+
+        // CLOUSURES
+        function clousure(a, b){
+            function esnclousure1(x, y){
+                return x + y;
+            }
+
+            function esnclousure2(x, y){
+                return x * y;
+            }
+            return esnclousure1(a, b) - esnclousure2(a, b);
+        }
+
+        console.log(clousure(3,2))
+
+
+        // ARROW FUNCTIONS
+
+        // callback
+        setTimeout(function(){
+            clousure(6,7);
+        }, 1000)
+
+        //New way
+        setTimeout(() =>{
+            clousure(6,7);
+        }, 1000)
+
+
+        function sumaa(a, b){
+            return a + b;
+        }
+
+        function multiplciarr(a, b){
+            return a * b;
+        }
+
+        function operaion(a, b, cb){
+            return cb(a,b)
+        }
+
+        console.log(operaion(3,4, multiplciarr))
+        console.log(operaion(3,4, function(a,b){
+            return a - b;
+        }))
+
+        console.log(operaion(3, 4, (a, b) => a - b));
+</script>
+</body>
+</html>

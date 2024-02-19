@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hello(){
+            return "Hello";
+        }
+
+        function bye(){
+            return "Bye";
+        }
+
+        function saluda(nombre, tipo){
+            return tipo() + " " + nombre;
+        }
+
+        console.log(saluda("SI", hello));
+        console.log(saluda("no", bye));
+
+        console.log(saluda("Otro", function(){
+            return "NS"
+        }))
+
+        setTimeout(function(){
+            console.log("3 segundos mas tarde");
+        },3000)
+    </script>
+</body>
+</html>

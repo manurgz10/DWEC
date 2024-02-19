@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crud indexedDB</title>
+</head>
+<body>
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre">
+    <label for="color" >Color</label>
+    <input type="text" id="color">
+    <button onclick="insertFruit()">Insertar</button>
+    <button onclick="deleteFruit()">Eliminar</button>
+    <button onclick="updateFruit()">Actualizar</button>
+    <button onclick="getFruits()">Listar frutas</button>
+    <button onclick="getGreenFruits()">Frutas verdes</button>
+
+
+
+    <script>
+        const db = indexedDB.open('Frutas', 1)
+
+        db.onupgradeneeded = function(ev) {
+            const database = ev.target.result; // nos devuelve la base de datos.
+
+            const frutaObjStore = database.createObjectStore('Fruta', {keyPath: 'name'})
+            frutaObjStore.createIndex('color', 'color', {unique: true})
+            frutaObjStore.add({
+                name: 'platano',
+                color: 'amarillo'
+            })
+        }
+
+        function insertFruit() {
+            const fruta = document.getElementById('nombre');
+            const color = document.getElementById('color')
+            const transaccion = db.result.transaction(['Fruta'], 'readwrite')
+            transaccion.objectStore('Fruta').add({
+                name : fruta.value,
+                color : color.value
+            })
+        }
+
+        function deleteFruit() {
+            const fruta = document.getElementById('nombre')
+            const transaccion = db.result.transaction(['Fruta'], 'readwrite')
+            transaccion.objectStore('Fruta').delete(fruta.value)
+        }
+
+        function updateFruit() {
+            const fruta = document.getElementById('nombre');
+            const color = document.getElementById('color')
+            const transaccion = db.result.transaction(['Fruta'], 'readwrite')
+            transaccion.objectStore('Fruta').put({
+                name : fruta.value,
+                color : color.value
+        })
+    }
+
+    function getFruits() {
+        const transaccion = db.result.transaction(['Fruta'], 'readwrite')
+        const fruitTable = transaccion.objectStore('Fruta').getAll();
+        fruitTable.onsuccess = function (ev) {
+            const frutas = ev.target.result;
+            frutas.forEach(fruta => {
+                console.log(fruta);
+            });
+        }
+    }
+
+    function getGreenFruits() {
+        const transaccion = db.result.transaction(['Fruta'], 'readwrite')
+        const color = transaccion.objectStore('Fruta').index('color');
+        color.getAll('verde').onsuccess = function(ev) {
+            console.log(ev.target.result);
+        }
+    }
+    
+
+    </script>
+</body>
+</html>

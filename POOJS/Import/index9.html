@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Import y export</title>
+</head>
+<body>
+    <script src="Mates.js"></script>
+    <script src="Matesbinaria.js"></script>
+
+    <script type="module">
+        import {suma, multiplicar} from './Mates.js'
+        import {sumaBin, multiplicar as multibin} from './Matesbinaria.js'
+        console.log(suma(3,4));
+
+        console.log(multiplicar(3,4));
+
+        console.log(multibin(3,4))
+
+        //console.log(multipicar(6,5))
+        //console.log(sumaBin(2,5))
+
+
+        // QUE ES UN MODULO DE JS
+    </script>
+</body>
+</html>

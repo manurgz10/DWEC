@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // existen '' y ""
+        // nuevas ``
+        /*ventajas
+        - Permite el uso de '' y "" dentro 
+        - Evitan concatenaciones y queda mas claro el codigo
+        - Permiten escribir variableas sin cerrar comillas
+        - Multilineal 
+        */
+
+        const a = "es un estring" +
+            "multilienal" +
+            "guay";
+
+        const a2 = `es un string 
+        multilinea
+        guay`;
+
+        //<a href="index.html">esto es un link</a>
+        //dobles
+        document.querySelector("#resultado")
+        .innerHTML = "<a href=\"index.html\">esto es un link</a>";
+        //simples
+        document.querySelector("#resultado")
+        .innerHTML = '<a href="index.html">esto es un link</a>';
+        //nuevas
+        document.querySelector("#resultado")
+        .innerHTML = `<a href="index.html">esto s'es un link</a>`;
+        
+    </script>
+</body>
+
+</html>

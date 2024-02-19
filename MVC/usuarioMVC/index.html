@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EJ Promises</title>
+  </head>
+  <body>
+    <div></div>
+    <script type="module">
+      import { getUsers } from "./UserService.js";
+
+      async function init(usuarios) {
+
+          var tabla = document.createElement("table");
+
+          var trCab = document.createElement("tr");
+          tabla.appendChild(trCab);
+
+          var thUserName = document.createElement("th");
+          thUserName.innerHTML = "Username";
+          var thName = document.createElement("th");
+          thName.innerHTML = "Name";
+          var thSurname = document.createElement("th");
+          thSurname.innerHTML = "Surname";
+          var thSex = document.createElement("th");
+          thSex.innerHTML = "Sex";
+          trCab.appendChild(thUserName);
+          trCab.appendChild(thName);
+          trCab.appendChild(thSurname);
+          trCab.appendChild(thSex);
+
+          for (let i = 0; i < usuarios.length; i++) {
+        var trInfo = document.createElement("tr");
+
+        var tdUsername = document.createElement("td");
+        tdUsername.innerHTML = usuarios[i].nick;
+
+        var tdName = document.createElement("td");
+        tdName.innerHTML = usuarios[i].nombre;
+
+        var tdSurname = document.createElement("td");
+        tdSurname.innerHTML = usuarios[i].apellido;
+
+        var tdSex = document.createElement("td");
+        tdSex.innerHTML = usuarios[i].sex;
+
+        trInfo.appendChild(tdUsername);
+        trInfo.appendChild(tdName);
+        trInfo.appendChild(tdSurname);
+        trInfo.appendChild(tdSex);
+        tabla.appendChild(trInfo);
+    }
+
+          var div = document.querySelector("div");
+          div.appendChild(tabla);
+      }
+
+      (async function () {
+        const usuarios = await getUsers();
+        init(usuarios);
+      })();
+      
+    </script>
+  </body>
+</html>
+ 

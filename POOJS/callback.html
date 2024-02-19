@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+</head>
+<body>
+
+    <p>Hola que tal</p>
+    <p>Hola que tal</p>
+    <p>Hola que tal</p>
+    <p>Hola que tal</p>
+    <script>
+
+// Listener 
+
+       /* document.querySelector("p").addEventListener("click", function(){
+            document.querySelector("p").style.color="red";
+        })*/
+
+
+// FUNCION DE CALLBACK
+        var parrafos = document.querySelectorAll("p");
+
+        for(let i = 0; i<parrafos.length; i++){
+            parrafos[i].addEventListener("click", function(){
+                console.log(i)
+                for(var j = 0 ; j<arguments.length;j++){
+                    console.log(arguments[j]);
+                }
+            })
+        }
+    </script>
+    
+</body>
+</html>

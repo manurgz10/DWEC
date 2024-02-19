@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="historial()">historial</button>
+    <button onclick="abrirventana()">Ventana</button>
+    <button onclick="cerrar()">cerrar</button>
+    <button onclick="refrescar()">refrescar</button>
+    <button onclick="quienEres()">¿?</button>
+    <script>
+
+        function historial() {
+            window.history.go(-2);
+        }
+
+        var myWindow;
+
+        function abrirventana() {
+            myWindow = window.open("https://www.cifpfbmoll.eu/", "Borja", "width=250,height=300");
+        }
+
+        function cerrar() {
+            if (myWindow) {
+                myWindow.close();
+            }
+        }
+
+        function refrescar(){
+            location.reload();
+        }
+
+        function quienEres(){
+            var nombre = window.prompt("¿?");
+
+            if(nombre != null){
+                alert("Eres "+ nombre)
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>

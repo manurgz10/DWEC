@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX</title>
+  </head>
+  <body>
+    <h1>Aqui vemos el resultado</h1>
+    <div id="resultadoget"></div>
+    <div id="resultadomultiple"></div>
+    <script>
+      /*
+        AJAX que es?
+
+        Async JavaScript And XML
+        Conectar asyncrono con nuestras webs
+
+        'animal.html -> sevidor( MySQL)
+        obejto animal <- 'JSON'
+
+        cons animal = getAnimals();
+        for(let i=0; i < animlas.length; i++){
+
+
+        }
+
+
+        XMLHttpRequest <- Objeto de microsoft
+
+        1- Resfrescar una parte del DOM
+        */
+
+      //
+
+      let xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+          console.log(this.responseText);
+          document.getElementById("resultadoget").innerHTML = this.responseText;
+        } else {
+          console.log("El estado es", this.readyState);
+        }
+      };
+      // xhttp.open("GET", "http://95.39.145.183/asincrono.php?num=1");
+      // xhttp.send();
+
+      for (let i = 1; i < 10; i++) {
+        let xhttp2 = new XMLHttpRequest();
+
+        let n = [i].toString();
+        let numero = "num=" + n;
+        //console.log(n, numero, i)
+
+        xhttp2.onreadystatechange = function () {
+          if (this.readyState == 4) {
+            console.log(this.responseText);
+            document.getElementById("resultadomultiple").innerHTML +=
+              this.responseText + "<br>";
+          } else {
+            console.log("El estado es", this.readyState);
+          }
+        };
+        xhttp2.open("GET", "http://95.39.145.183/asincrono.php?" + numero);
+        xhttp2.setRequestHeader(
+          "Content-type",
+          "application/x-www-form-urlencoded"
+        );
+        xhttp2.send(numero);
+      }
+    </script>
+  </body>
+</html>

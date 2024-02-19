@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Await 2</title>
+</head>
+<body>
+  <div id="resultado"></div>  
+    <script>
+
+        function asincronoSinAwait(){
+            for(let i = 1; i<= 10; i++ ){
+                fetch("http://34.90.153.139/ejercicios/asincrono.php?num="+i)
+                .then((r) => r.text())
+                .then((respuesta) => {
+                    document.getElementById("resultado").innerHTML += respuesta + "<br>";
+                })
+            }
+        }
+
+        async function asincronoConAwait(){
+            for(let i = 1; i<= 10; i++ ){
+                const numeroFetch =  await fetch("http://34.90.153.139/ejercicios/asincrono.php?num="+i);
+                const numero = await numeroFetch.text();
+                document.getElementById("resultado").innerHTML += numero + "<br>";
+            }
+        }
+
+
+        async function asincronoConAwaitPromesas(){
+            const promise = []
+
+            for(let i = 1; i<= 10; i++ ){
+                const numeroFetch =  fetch("http://34.90.153.139/ejercicios/asincrono.php?num="+i);
+                promise.push(numeroFetch)
+            
+            }
+
+            /*Promise.all(promise).then(async function(responses){
+                for(let i = 1; i < responses.length; i++ ){
+                    const res = await responses[i].text();
+                    document.getElementById("resultado").innerHTML += res + "<br>";
+            }
+            })*/
+
+            const responses = await Promise.all(promise);
+            for(let i = 0; i < responses.length; i++ ){
+                    const res = await responses[i].text();
+                    document.getElementById("resultado").innerHTML += res + "<br>";
+            }
+            
+
+        }
+        //asincronoSinAwait()
+        //asincronoConAwait()
+        asincronoConAwaitPromesas()
+
+    </script>
+</body>
+</html>

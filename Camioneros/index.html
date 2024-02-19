@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tabla Anual de Asignación de Camiones a Conductores</title>
+  </head>
+  <body>
+    <script>
+      var Chofer = ["Pep", "Juan", "Tomeu"];
+      var Camiones = ["Volvo", "Scania", "Man", "Iveco"];
+    
+      function dist(Chofer, Camiones){
+        var semanas = 52;
+  
+        for(var semana = 1; semana <= semanas; semana++){
+          var asigned = "";
+          for(var i = 0; i < Chofer.length; i++){
+            var chofer = Chofer[i];
+            var camion = Camiones[(semana + i) % Camiones.length];
+            asigned += chofer + " conduce " + camion + ", ";
+          }
+          console.log("Semana " + semana + ": " + asigned);
+        }
+      }
+      
+      dist(Chofer, Camiones);
+    </script>
+  </body>
+</html>

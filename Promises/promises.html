@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promises</title>
+  </head>
+  <body>
+    <script>
+      /* 
+    Objeto para represnetar un comportamiento asincrono
+
+    3 estados:
+        - Pending
+        - FullFiel
+        - Rejected
+    */
+
+      const x = new Promise(function (resolve, rejected) {});
+
+      /* 
+    Then si va bien RESLOVED 
+    Catch si va mal REJECTED
+    */
+
+      /*
+    const wait = new Promise(function(resolve, rejected){
+        setTimeout(function(){
+            resolve("Finaliza Bien.")
+        }, 5000)
+    }).then(function(valor){
+        console.log("Entra en el then", valor)
+        console.log("SI", wait)
+    })
+    console.log(wait)
+*/
+
+      // AJAX fetch
+      fetch("http://95.39.145.183/ejercicios/color.php?min=90&max=100", {
+        method: "GET",
+      })
+        .then(function (respuesta1) {
+      /*    
+    respuesta1.text()
+    respuesta1.json()
+    respuesta1.blob()
+    )
+    */
+          return respuesta1.json(); 
+        })
+        .then(function (respuesta2) {
+          console.log("Respuesta 2", respuesta2);
+        });
+
+
+
+    //Arrow
+    fetch("http://95.39.145.183/ejercicios/color.php?min=90&max=100")
+    .then(r => r.json())
+    .then(respuesta2 => console.log("Respuesta 2 Arrow", respuesta2));
+    
+
+    /* POST
+    fetch("http://95.39.145.183/ejercicios/color.php?", {
+        method: "POST",
+        body: "min=90&max=100",
+        headers: {
+            "Content-type": "application/x-www-form_urlencoded"
+        }
+      })*/
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VueJS</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <style>
+      .rojo {
+        color: red;
+      }
+
+      .blue {
+        color: blue;
+      }
+
+      .negrita {
+        font-weight: bold;
+      }
+    </style>
+    <div id="aplicacion">
+
+      <input type="text" v-model="mensaje" >
+      <input type="text" v-model="usuario.nombre" >
+      <input type="text" v-model="usuario.apellido" >
+      <input type="text" v-model="usuario.direccion" >
+
+      <button type="submit" @click="enviarFormulario">Enviar</button>
+      <br>
+      {{ mensaje }}
+      <p :class="activeClass + ` negrita `">
+        {{usuario.nombre}} {{usuario.apellido}}
+      </p>
+      <p v-if="activeClass == 'rojo'">
+        {{usuario.nombre}} {{usuario.apellido}}
+      </p>
+
+      <button @click="changeMessage">Clicka!</button>
+      <button @click="ordenaUsers">Ordena usuarios</button>
+      <ul>
+        <li v-for="n in respuesta">{{n.name}} - {{n.surname}}</li>
+      </ul>
+
+    </div>
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            mensaje: "Hello Vue",
+            usuario: {
+              nombre: "Manu",
+              apellido: "Rodriguez",
+            },
+            activeClass: "rojo",
+            respuesta: null,
+          };
+        },
+        async created() {
+          await fetch("http://34.90.153.139/ejercicios/usuarios.php")
+            .then((r) => r.json())
+            .then((respuesta) => {
+              this.respuesta = respuesta;
+            });
+        },
+        methods: {
+          changeMessage() {
+            this.mensaje = "Goodbye";
+            this.activeClass = "blue";
+          },
+          ordenaUsers() {
+            this.respuesta.sort((a, b) => a.surname.localeCompare(b.surname))
+          },
+          enviarFormulario() {
+            console.log(this.usuario);
+          }
+        },
+      }).mount("#aplicacion");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinario</title>
+</head>
+<body>
+
+    <script type="module">
+        import { getAnimals } from "../service/AnimalService.js";
+
+        function paint(animals){
+            let tabla = "<table>";
+                tabla += "<tr>";
+                tabla += "<th>Nombre</th>";
+                tabla += "<th>Ficha</th>";
+                tabla += "</tr>";
+
+                for(let i = 0;i<animals.length;i++){
+                tabla += "<tr>";
+                tabla += "<td>"+ animals[i].name +"</td>";
+                tabla += "<td><a href='animalForm.html?identificador=1 >"+ animals[i].id+"</td>";
+                tabla += "</tr>";
+                }
+
+                tabla += "</table>";
+
+                document.querySelector("body").innerHTML = tabla;
+            }
+        function init(){
+            const animals = getAnimals
+            paint(animals);
+        }
+
+        window.addEventListener("load", init);
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinario</title>
+</head>
+<body>
+    <script type="module">
+        import { getAnimals } from "../service/AnimalService.js";
+
+        function paint(animals){
+            let tabla = "<table>";
+            tabla += "<tr>";
+            tabla += "<th>Nombre</th>";
+            tabla += "<th>Ficha</th>";
+            tabla += "</tr>";
+
+            for(let i = 0; i < animals.length; i++){
+                tabla += "<tr>";
+                tabla += "<td>"+ animals[i].name +"</td>";
+                tabla += "<td><a href='animalForm.html?identificador=" + animals[i].id + "'>Ficha</a></td>";
+                tabla += "</tr>";
+            }
+
+            tabla += "</table>";
+
+            document.querySelector("body").innerHTML = tabla;
+        }
+
+        function init(){
+            const animals = getAnimals();
+            paint(animals);
+        }
+
+        window.addEventListener("load", init);
+    </script>
+
+</body>
+</html>

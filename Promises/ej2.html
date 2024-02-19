@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      /*
+        10 peticiones asincronas ordenadas 
+        URL : http://34.147.66.205/ejercicios/asincrono.php
+        Method : GET
+        PARAMS : num 
+        Return : text
+      */
+
+      function numPeticion(num) {
+        return fetch("http://34.90.153.139/ejercicios/asincrono.php?num="+num)
+          .then((res) => res.text());
+      }
+
+      const promesas = [];
+      for (let i = 1; i < 11; i++) {
+        promesas.push(numPeticion(i));
+      }
+
+      Promise.all(promesas)
+        .then(function(respuestas){
+          const body = document.querySelector("body");
+          respuestas.forEach((respuesta) => {
+            body.innerHTML += respuesta + "<br>";
+          });
+        });
+
+
+       
+
+      
+    </script>
+  </body>
+</html>

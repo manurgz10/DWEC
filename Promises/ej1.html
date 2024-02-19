@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EJ Promises</title>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      /*
+        Crea una tabla de usarios recuperando los datos de:
+        URL: http://95.39.145.183/ejercicios/usuarios.php
+        //34.147.66.205
+        metodo : GET
+        response : JSON
+
+        Tabla Username, name ,surename y sex
+        */
+      function getUsers() {
+        const x = new Promise(function (resolve, rejected) {});
+
+        fetch("http://34.90.153.139/ejercicios/usuarios.php")
+          .then((respuesta1) => respuesta1.json())
+          .then(function (respuesta2) {
+            console.log(respuesta2);
+
+            var tabla = document.createElement("table");
+
+            var trCab = document.createElement("tr");
+            tabla.appendChild(trCab);
+
+            var thUserName = document.createElement("th");
+            thUserName.innerHTML = "Username";
+            var thName = document.createElement("th");
+            thName.innerHTML = "Name";
+            var thSurname = document.createElement("th");
+            thSurname.innerHTML = "Surname";
+            var thSex = document.createElement("th");
+            thSex.innerHTML = "Sex";
+            trCab.appendChild(thUserName);
+            trCab.appendChild(thName);
+            trCab.appendChild(thSurname);
+            trCab.appendChild(thSex);
+
+            for (let i = 0; i < respuesta2.length; i++) {
+              var trInfo = document.createElement("tr");
+
+              var tdUsername = document.createElement("td");
+              tdUsername.innerHTML = respuesta2[i].username;
+
+              var tdName = document.createElement("td");
+              tdName.innerHTML = respuesta2[i].name;
+
+              var tdSurname = document.createElement("td");
+              tdSurname.innerHTML = respuesta2[i].surname;
+
+              var tdSex = document.createElement("td");
+              tdSex.innerHTML = respuesta2[i].sex;
+
+              trInfo.appendChild(tdUsername);
+              trInfo.appendChild(tdName);
+              trInfo.appendChild(tdSurname);
+              trInfo.appendChild(tdSex);
+              tabla.appendChild(trInfo);
+            }
+
+            var div = document.querySelector("div");
+            div.appendChild(tabla);
+
+        fetch("http://95.39.145.183/ejercicios/color.php?min=19&max=20")
+            .then((color1) => color1.json())
+            .then(function (color2) {
+            tabla.style.backgroundColor = color2.background;
+            tabla.style.color = color2.color;
+            tabla.style.fontSize = color2.width += "px";
+              });
+          });
+      }
+    
+      (function () {
+        getUsers();
+      })();
+
+      /* 
+        Promise.all(array de promesas).then(array de respuestas)
+      */
+
+      
+    </script>
+  </body>
+</html>

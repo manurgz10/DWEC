@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buscador de ciudades</title>
+  </head>
+  <body>
+    <h2>Buscador de ciudades</h2>
+    <input type="text" id="ciudad" />
+    <button onclick="ciudadInit()">Buscar ciudad</button><br />
+    <div id="result"></div>
+
+    <script>
+      // Abrimos la base de datos
+      const request = indexedDB.open("Cities", 1);
+
+      request.onupgradeneeded = async (event) => {
+        // Save the IDBDatabase interface
+        const db = event.target.result;
+
+        // Create an objectStore for this database
+        const cityObjectStore = db.createObjectStore("name", { keyPath: "city" });
+      };
+
+      const citiesFetch = await fetch('https://raw.githubusercontent.com/David-Haim-zz/CountriesToCitiesJSON/master/countriesToCities.json');
+
+      const cities = citiesFetch.json();
+
+      const countries = Object.keys(cities); //Obtienes la llave de los paises
+
+      
+    </script>
+  </body>
+</html>

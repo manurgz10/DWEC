@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        //ES5 --> 2009
+        //ES6 --> (variables, modulos ,apis, scopes. promises)
+        //ES14 --> 2023
+        
+
+        /* 
+        Variables 
+
+        ES5 
+
+        LET --> Declarar variables (sobreescribir)
+        CONST --> declarar constantes o variables que no se pueden sobreescribir
+        */
+
+        let x = 4;
+        x = 5;
+        
+        const y = 5;
+        //y = 6; Error
+        
+        const z = []
+        z.push("HOLA")
+        z.push("ADIOS")
+        //z = ["Adios"] Error
+
+        const pep = {
+            name :"Pep",
+            surmane :"Toni"
+        }
+
+        pep.name = "Joni"
+
+        //pep = {name :"Joan"};
+
+        /* 
+        Const = 
+            - Mas rapido
+            - El tipo no cambia (static)
+            - Evita problemas de inicializacion
+        */
+
+        //const a;
+        //a = 4;
+
+        /* 
+
+        Diferencia es el scope
+         VAR ----> Ambito de funcion
+         LET / CONST ----> Ambito de bloque 
+        */
+
+        function vanilla(){
+            for(var i = 0; i<5; i++){
+                var j = i + 3;
+                console.log("i "+ i + " j "+ j);
+            }
+            console.log("i "+ i + " j "+ j);
+        } 
+        vanilla()  
+
+        function es6(){
+            for(let i = 0; i<5; i++){
+                let j = i + 3;
+                console.log("i "+ i + " j "+ j);
+            }
+            //console.log("i "+ i + " j "+ j);
+        } 
+        es6()  
+         </script>
+</body>
+</html>

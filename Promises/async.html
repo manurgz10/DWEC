@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async - await</title>
+</head>
+<body>
+    
+
+    <script>
+
+    /* 
+
+    Async -Await
+
+    Son palabras reservadaas para resolver promesas
+
+    Cuando funciton devuelve una promesa la podemos esperar con "await"
+
+    const peticion = await fetch("url")
+
+    PERO Si usamos await la funcion debe ser async
+    */
+
+        function getColor(){
+            fetch("http://34.90.153.139/ejercicios/color.php?min=90&max=100")
+            .then(r => r.json())
+            .then(respuesta2 => {
+                console.log("Respuesta sin Await", respuesta2)
+            });
+        }
+
+     
+
+         async function getColorConAsyncAwait(){
+            const colorFetch = await  fetch("http://34.90.153.139/ejercicios/color.php?min=90&max=100");
+            const color = await colorFetch.json();
+            console.log("Respuesta Async Await" , color)
+        }
+
+        getColor();
+        getColorConAsyncAwait();
+        console.log("sigo")
+       
+        /* 
+        Consideraciones importantes cuando usamos ASYNC -AWAIT
+        
+        1- Await espera a acabar la promesa para continuar el codigo 
+        2- Resuelve el problema de scope la respuesta se encuentra 
+            en el mismo ambito de visibilidad
+        3- OJO con los bucles (tarda mas)
+        */
+    </script>
+
+</body>
+</html>
